@@ -23,11 +23,18 @@ class Student:
         else:
             print('Ошибка!')
 
+    def __str__(self):
+        return  f'Имя: {self.__name}\n'\
+                f'Фамилия: {self.__surname}\n'\
+                f'Средняя оценка за домашние задания: {1}\n'\
+                f'Курсы в процессе изучения: {",".join(self.__courses_in_progress)}\n'\
+                f'Завершенные курсы: {",".join(self.__finished_courses)}'
+
 
 class Mentor:
     def __init__(self, name, surname):
-        self.__name = name
-        self.__surname = surname
+        self._name = name
+        self._surname = surname
         self._courses_attached = []
         
        
@@ -47,6 +54,11 @@ class Lecturer(Mentor):
 
     def getCourses(self) -> set:
         return set(self._courses_attached)
+    
+    def __str__(self):
+        return  f'Имя: {self._name}\n'\
+                f'Фамилия: {self._surname}\n'\
+                f'Средняя оценка за лекции: {1}'
 
 
 class Reviewer(Mentor):
@@ -58,8 +70,16 @@ class Reviewer(Mentor):
             student.receive_grade(course, grade)
         else:
             print('Ошибка!')
-        
+
+    def __str__(self):
+        return  f'Имя: {self._name}\n'\
+                f'Фамилия: {self._surname}'
+
 
 student1 = Student("Alex", "Johnson", "Male")
 lecture1 = Lecturer("John", "Johnson")
 reviewer1 = Reviewer("Peter", "Johnson")
+
+print(student1)
+print(lecture1)
+print(reviewer1)
