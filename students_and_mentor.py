@@ -8,7 +8,11 @@ class Student:
         self.__grades = {}
 
     def rate_lecturer(self, lecturer, course, point):
-        pass
+        if  set(self.__courses_in_progress) & lecturer.getCourses() and\
+            point in range(0, 11):
+            lecturer.receive_points(course, point)   
+        else:
+            print("Ошибка!")
 
     def receive_grade(self, course, grade):
         if course in self.__courses_in_progress:
@@ -32,6 +36,18 @@ class Lecturer(Mentor):
         super().__init__(name, surname)
         self.__points = {}
 
+    def receive_points(self, course, point):
+        if course in self._courses_attached:
+            if course in self.__points:
+                self.__points[course] += [point]
+            else:
+                self.__points[course] = [point]
+        else:
+            print("Ошибка!")
+
+    def getCourses(self) -> set:
+        return set(self._courses_attached)
+
 
 class Reviewer(Mentor):
     def __init__(self, name, surname):
@@ -43,9 +59,6 @@ class Reviewer(Mentor):
         else:
             print('Ошибка!')
         
-
-
-           
 
 student1 = Student("Alex", "Johnson", "Male")
 lecture1 = Lecturer("John", "Johnson")
