@@ -6,19 +6,31 @@ class Student:
         self.finished_courses = []
         self.courses_in_progress = []
         self.grades = {}
-        
+
+    def rate_lecturer(self, lecturer, course, point):
+        pass
+
+
 class Mentor:
     def __init__(self, name, surname):
         self.name = name
         self.surname = surname
         self.courses_attached = []
         
+       
+class Lecturer(Mentor):
+    def __init__(self, name, surname):
+        super().__init__(name, surname)
+        self.points = []
+
+
+class Reviewer(Mentor):
+    def __init__(self, name, surname):
+        super().__init__(name, surname)
+
     def rate_hw(self, student, course, grade):
-        if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
-            if course in student.grades:
-                student.grades[course] += [grade]
-            else:
-                student.grades[course] = [grade]
-        else:
-            return 'Ошибка'
- 
+        pass
+
+student1 = Student("Alex", "Johnson", "Male")
+lecture1 = Lecturer("John", "Johnson")
+reviewer1 = Reviewer("Peter", "Johnson")
