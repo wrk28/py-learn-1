@@ -30,7 +30,7 @@ class Student:
         else:
             print("Ошибка!")
 
-    def __avg_grade(self):
+    def avg_grade(self):
         adding = 0
         number = 0  
         for key, value in self.__grades.items():
@@ -48,43 +48,43 @@ class Student:
     def __str__(self):
         return  f'Имя: {self.__name}\n'\
                 f'Фамилия: {self.__surname}\n'\
-                f'Средняя оценка за домашние задания: {self.__avg_grade()}\n'\
+                f'Средняя оценка за домашние задания: {self.avg_grade()}\n'\
                 f'Курсы в процессе изучения: {", ".join(self.__courses_in_progress)}\n'\
                 f'Завершенные курсы: {", ".join(self.__finished_courses)}'
 
     def __eq__(self, student):
         if isinstance(student, Student):
-            return self.__avg_grade() == student.__avg_grade()
+            return self.avg_grade() == student.avg_grade()
         else:
             return None
     
     def __ne__(self, student):
         if isinstance(student, Student):
-            return self.__avg_grade() != student.__avg_grade()
+            return self.avg_grade() != student.avg_grade()
         else:
             return None
         
     def __gt__(self, student):
         if isinstance(student, Student):
-            return self.__avg_grade() > student.__avg_grade()
+            return self.avg_grade() > student.avg_grade()
         else:
             return None
     
     def __ge__(self, student):
         if isinstance(student, Student):
-            return self.__avg_grade() >= student.__avg_grade()
+            return self.avg_grade() >= student.avg_grade()
         else:
             return None
         
     def __lt__(self, student):
         if isinstance(student, Student):
-            return self.__avg_grade() < student.__avg_grade()
+            return self.avg_grade() < student.avg_grade()
         else:
             return None
         
     def __le__(self, student):
         if isinstance(student, Student):
-            return self.__avg_grade() <= student.__avg_grade()
+            return self.avg_grade() <= student.avg_grade()
         else:
             return None
     
@@ -118,7 +118,7 @@ class Lecturer(Mentor):
     def get_course_list(self):
         return set(self._courses_attached)
     
-    def __avg_point(self):
+    def avg_point(self):
         adding = 0
         number = 0  
         for key, value in self.__points.items():
@@ -128,44 +128,44 @@ class Lecturer(Mentor):
     
     def __eq__(self, lecturer):
         if isinstance(lecturer, Lecturer):
-            return self.__avg_point() == lecturer.__avg_point()
+            return self.avg_point() == lecturer.avg_point()
         else:
             return None
           
     def __ne__(self, lecturer):
         if isinstance(lecturer, Lecturer):
-            return self.__avg_point() != lecturer.__avg_point()
+            return self.avg_point() != lecturer.avg_point()
         else:
             return None
             
     def __gt__(self, lecturer):
         if isinstance(lecturer, Lecturer):
-            return self.__avg_point() > lecturer.__avg_point()
+            return self.avg_point() > lecturer.avg_point()
         else:
             return None
             
     def __ge__(self, lecturer):
         if isinstance(lecturer, Lecturer):
-            return self.__avg_point() >= lecturer.__avg_point()
+            return self.avg_point() >= lecturer.avg_point()
         else:
             return None
                 
     def __lt__(self, lecturer):
         if isinstance(lecturer, Lecturer):
-            return self.__avg_point() < lecturer.__avg_point()
+            return self.avg_point() < lecturer.avg_point()
         else:
             return None
                 
     def __le__(self, lecturer):
         if isinstance(lecturer, Lecturer):
-            return self.__avg_point() <= lecturer.__avg_point()
+            return self.avg_point() <= lecturer.avg_point()
         else:
             return None
                 
     def __str__(self):
         return  f'Имя: {self._name}\n'\
                 f'Фамилия: {self._surname}\n'\
-                f'Средняя оценка за лекции: {self.__avg_point()}'
+                f'Средняя оценка за лекции: {self.avg_point()}'
 
 
 class Reviewer(Mentor):
@@ -186,9 +186,15 @@ def average_grade_dict(students, course):
     pass
 
 def average_grade_total(students, course):
+    # adding = 0
+    # len = 0
+    # for student in students:
+    #     adding += student.avg_grade()
+    #     len += 1
+    # return adding/len if len !=0 else None
     pass
 
-def average_poin_dict(lectures, course):
+def average_point_dict(lectures, course):
     pass
 
 def average_point_total(lectures, course):
@@ -250,6 +256,35 @@ def test():
     print()
     print(reviewer2)
     print()
+
+    print(student1 == student2)
+    print(student1 != student2)
+    print(student1 >= student2)
+    print(student1 <= student2)
+    print(student1 > student2)
+    print(student1 < student2)
+    print()
+    print(lecture1 == lecture2)
+    print(lecture1 != lecture2)
+    print(lecture1 >= lecture2)
+    print(lecture1 <= lecture2)
+    print(lecture1 > lecture2)
+    print(lecture1 < lecture2)
+    print()
+
+    student_list = [student1, student2]
+    lecture_list = [lecture1, lecture2]
+    course = 'физика'
+
+    print(f'Средняя оценка по курсу {course}:',
+          f'{average_grade_dict(student_list, course)}')
+    print(f'Общая средняя оценка по курсу {course}:',
+          f'{average_grade_total(student_list, course)}')
+    print()
+    print(f'Средняя оценка по курсу {course}:',
+          f'{average_point_dict(lecture_list, course)}')
+    print(f'Общая средняя оценка по курсу {course}:',
+          f'{average_point_total(lecture_list, course)}')
 
 if __name__ == '__main__':
     test()
