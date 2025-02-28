@@ -23,10 +23,19 @@ class Student:
         else:
             print('Ошибка!')
 
+    def __avg_grade(self):
+        grades = 0
+        number = 0  
+        for course in self.__grades:
+            grades += sum(course.values())
+            number += len(course.values())
+        return grades/number if number != 0 else 0
+
+
     def __str__(self):
         return  f'Имя: {self.__name}\n'\
                 f'Фамилия: {self.__surname}\n'\
-                f'Средняя оценка за домашние задания: {1}\n'\
+                f'Средняя оценка за домашние задания: {self.__avg_grade()}\n'\
                 f'Курсы в процессе изучения: {",".join(self.__courses_in_progress)}\n'\
                 f'Завершенные курсы: {",".join(self.__finished_courses)}'
 
@@ -55,10 +64,18 @@ class Lecturer(Mentor):
     def getCourses(self) -> set:
         return set(self._courses_attached)
     
+    def __avg_point(self):
+        points = 0
+        number = 0  
+        for course in self.__points:
+            points += sum(course.values())
+            number += len(course.values())
+        return points/number if number != 0 else 0
+    
     def __str__(self):
         return  f'Имя: {self._name}\n'\
                 f'Фамилия: {self._surname}\n'\
-                f'Средняя оценка за лекции: {1}'
+                f'Средняя оценка за лекции: {self.__avg_point()}'
 
 
 class Reviewer(Mentor):
