@@ -39,7 +39,42 @@ class Student:
                 f'Курсы в процессе изучения: {",".join(self.__courses_in_progress)}\n'\
                 f'Завершенные курсы: {",".join(self.__finished_courses)}'
 
-
+    def __eq__(self, student):
+        if isinstance(student, Student):
+            return self.__avg_grade() == student.__avg_grade()
+        else:
+            return None
+    
+    def __ne__(self, student):
+        if isinstance(student, Student):
+            return self.__avg_grade() != student.__avg_grade()
+        else:
+            return None
+        
+    def __gt__(self, student):
+        if isinstance(student, Student):
+            return self.__avg_grade() > student.__avg_grade()
+        else:
+            return None
+    
+    def __ge__(self, student):
+        if isinstance(student, Student):
+            return self.__avg_grade() >= student.__avg_grade()
+        else:
+            return None
+        
+    def __lt__(self, student):
+        if isinstance(student, Student):
+            return self.__avg_grade() < student.__avg_grade()
+        else:
+            return None
+        
+    def __le__(self, student):
+        if isinstance(student, Student):
+            return self.__avg_grade() <= student.__avg_grade()
+        else:
+            return None
+    
 class Mentor:
     def __init__(self, name, surname):
         self._name = name
@@ -72,6 +107,42 @@ class Lecturer(Mentor):
             number += len(course.values())
         return points/number if number != 0 else 0
     
+    def __eq__(self, lecturer):
+        if isinstance(lecturer, Lecturer):
+            return self.__avg_point() == lecturer.__avg_point()
+        else:
+            return None
+          
+    def __ne__(self, lecturer):
+        if isinstance(lecturer, Lecturer):
+            return self.__avg_point() != lecturer.__avg_point()
+        else:
+            return None
+            
+    def __gt__(self, lecturer):
+        if isinstance(lecturer, Lecturer):
+            return self.__avg_point() > lecturer.__avg_point()
+        else:
+            return None
+            
+    def __ge__(self, lecturer):
+        if isinstance(lecturer, Lecturer):
+            return self.__avg_point() >= lecturer.__avg_point()
+        else:
+            return None
+                
+    def __lt__(self, lecturer):
+        if isinstance(lecturer, Lecturer):
+            return self.__avg_point() < lecturer.__avg_point()
+        else:
+            return None
+                
+    def __le__(self, lecturer):
+        if isinstance(lecturer, Lecturer):
+            return self.__avg_point() <= lecturer.__avg_point()
+        else:
+            return None
+                
     def __str__(self):
         return  f'Имя: {self._name}\n'\
                 f'Фамилия: {self._surname}\n'\
@@ -94,9 +165,10 @@ class Reviewer(Mentor):
 
 
 student1 = Student("Alex", "Johnson", "Male")
+student2 = Student("Alexa", "Johnson", "Female")
 lecture1 = Lecturer("John", "Johnson")
 reviewer1 = Reviewer("Peter", "Johnson")
 
-print(student1)
+print(student1 > student2)
 print(lecture1)
 print(reviewer1)
