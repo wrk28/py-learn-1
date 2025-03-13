@@ -1,5 +1,5 @@
 class Student:
-    def __init__(self, name, surname, gender):
+    def __init__(self, name: str, surname: str, gender: str):
         self.__name = name
         self.__surname = surname
         self.__gender = gender
@@ -7,8 +7,8 @@ class Student:
         self.__courses_in_progress = []
         self.__grades = {}
 
-    def rate_lecturer(self, lecturer, course, point):
-        if  set(self.__courses_in_progress) & lecturer.get_course_list() and\
+    def rate_lecturer(self, lecturer, course: str, point: int):
+        if  course in self.__courses_in_progress and course in lecturer.get_course_list() and \
             point in range(0, 11):
             lecturer.receive_points(course, point)   
         else:
@@ -17,17 +17,14 @@ class Student:
     def get_full_name(self):
         return f'{self.__name} {self.__surname}'
 
-    def receive_grade(self, course, grade):
+    def receive_grade(self, course: str, grade: int):
         if course in self.__courses_in_progress:
             if course in self.__grades:
-                self.__grades[course] += [grade]
-            # now the course is added by take_course method
-            # else:
-            #   self.__grades[course] = [grade]
+                self.__grades.setdefault(course, []).append(grade)
         else:
             print('Ошибка!')
 
-    def take_course(self, course):
+    def take_course(self, course: str):
         if  course not in self.__courses_in_progress and \
             course not in self.__finished_courses:
             self.__courses_in_progress.append(course)
@@ -35,7 +32,7 @@ class Student:
         else:
             print("Ошибка!")
 
-    def avg_grade(self, course=None):
+    def avg_grade(self, course: str = None):
         if course is None:
             courses = self.__grades.items()
             grade_sum = sum(list(map(lambda course: sum(course[1]), courses)))
@@ -47,7 +44,7 @@ class Student:
         else:
             return 0
     
-    def end_course(self, course):
+    def end_course(self, course: str):
         if  course in self.__courses_in_progress and \
             course not in self.__finished_courses:
             self.__courses_in_progress.remove(course)
@@ -98,7 +95,7 @@ class Student:
             return None
     
 class Mentor:
-    def __init__(self, name, surname):
+    def __init__(self, name: str, surname: str):
         self._name = name
         self._surname = surname
         self._courses_attached = []
@@ -106,19 +103,18 @@ class Mentor:
     def get_full_name(self):
         return f'{self._name} {self._surname}'
 
-    def assigned_for_course(self, course):
-        if  course not in self._courses_attached and \
-            course not in self._courses_attached:
+    def assigned_for_course(self, course: str):
+        if course not in self._courses_attached:
             self._courses_attached.append(course)
         else:
             print("Ошибка!")
        
 class Lecturer(Mentor):
-    def __init__(self, name, surname):
+    def __init__(self, name, surname: str):
         super().__init__(name, surname)
         self.__points = {}
 
-    def receive_points(self, course, point):
+    def receive_points(self, course: str, point: int):
         if course in self._courses_attached:
             if course in self.__points.keys():
                 self.__points[course] += [point]
@@ -130,7 +126,7 @@ class Lecturer(Mentor):
     def get_course_list(self):
         return set(self._courses_attached)
     
-    def avg_point(self, course=None):
+    def avg_point(self, course: str =None) -> float:
         if course is None:
             courses = self.__points.items()
             point_sum = sum(list(map(lambda course: sum(course[1]), courses)))
@@ -189,7 +185,7 @@ class Reviewer(Mentor):
     def __init__(self, name, surname):
         super().__init__(name, surname)
 
-    def rate_hw(self, student, course, grade):
+    def rate_hw(self, student, course: str, grade: int):
         if isinstance(student, Student) and course in self._courses_attached:
             student.receive_grade(course, grade)
         else:
@@ -199,28 +195,28 @@ class Reviewer(Mentor):
         return  f'Имя: {self._name}\n'\
                 f'Фамилия: {self._surname}'
     
-def average_grade_dict(students: Student, course):
+def average_grade_dict(students, course: str):
     grade_list = {}
     for student in students:
         grade_list[student.get_full_name()] = student.avg_grade(course)
     return str(grade_list)
 
 
-def average_grade_total(students, course):
+def average_grade_total(students, course: str):
     adding = 0
-    len = 0
+    count = 0
     for student in students:
         adding += student.avg_grade(course)
-        len += 1
-    return adding/len if len !=0 else None
+        count += 1
+    return adding/count if count !=0 else None
 
-def average_point_dict(lectures, course):
+def average_point_dict(lectures, course: str):
     point_list = {}
     for lecture in lectures:
         point_list[lecture.get_full_name()] = lecture.avg_point(course)
     return str(point_list)
 
-def average_point_total(lectures, course):
+def average_point_total(lectures, course: str):
     adding = 0
     len = 0
     for lecture in lectures:
